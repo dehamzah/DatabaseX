@@ -1,13 +1,12 @@
 <html>
-    <head>
-
-<?php 
+<head>
+<?php
 include "plugin/header.php";
-include "plugin/footer.php
-include "config/dbconnect.php"; 
+include "plugin/notification.php";
+include "config/dbconnect.php";
 ?>
-
-    </head>
-    <body>
-    </body>
+</head>
+<body>
+<?php include "plugin/footer.php"; ?>
+</body>
 </html>
