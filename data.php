@@ -4,8 +4,46 @@
 include "plugin/header.php";
 include "plugin/notification.php";
 include "config/dbconnect.php";
+require 'plugin/Zebra_Pagination.php';
 
-$sql = mysql_query("SELECT id, mailing_address, country, city FROM auth_userprofile ORDER BY ID ASC");
+// how many records should be displayed on a page?
+$records_per_page = 10;
+// instantiate the pagination object
+$pagination = new Zebra_Pagination();
+
+// the MySQL statement to fetch the rows
+// note how we build the LIMIT
+// also, note the "SQL_CALC_FOUND_ROWS"
+// this is to get the number of rows that would've been returned if there was no LIMIT
+// see http://dev.mysql.com/doc/refman/5.0/en/information-functions.html#function_found-rows
+$MySQL = '
+    SELECT
+        SQL_CALC_FOUND_ROWS
+        id,
+        mailing_address,
+        country,
+        city
+    FROM
+        auth_userprofile
+    LIMIT
+        ' . (($pagination->get_page() - 1) * $records_per_page) . ', ' . $records_per_page . '
+';
+
+// if query could not be executed
+if (!($result = @mysql_query($MySQL))) {
+    // stop execution and display error message
+    die(mysql_error());
+
+}
+
+// fetch the total number of records in the table
+$rows = mysql_fetch_assoc(mysql_query('SELECT FOUND_ROWS() AS rows'));
+// pass the total number of records to the pagination class
+$pagination->records($rows['rows']);
+// records per page
+$pagination->records_per_page($records_per_page);
+
+
 ?>
 <script type="text/javascript">
 window.apex_search = {};
@@ -76,9 +114,9 @@ apex_search.search = function(e){
 				</tr>
 			</thead>
 			<tbody id="data">
-			<?php $no=1; while ($row = mysql_fetch_array($sql)) { ?>
+			<?php $no=1; while ($row = mysql_fetch_array($result)) { ?>
 				<tr>
-					<td align="center"><?php echo $no; ?></td>
+					<td align="center"><?php echo $row['id']; ?></td>
 					<td><?php echo $row['mailing_address']; ?></td>
 					<td><?php echo $row['country']; ?></td>
 					<td><?php echo $row['city']; ?></td>
@@ -92,6 +130,10 @@ apex_search.search = function(e){
 			</tbody>
 		</table>
 	</p>
+
+	<!-- render the pagination links -->
+	<?php $pagination->render(); ?>
+
 	</div>
 </div>
 
