@@ -3,7 +3,7 @@
 <?php
 include "plugin/header.php";
 include "plugin/notification.php"
-include "config/connect.php";
+include "config/dbconnect.php";
 
 $sql = mysql_query("SELECT id, mailing_address, country, city FROM auth_userprofile WHERE id = '".$_GET['id']."'");
 $data = mysql_fetch_array($sql);
@@ -12,6 +12,7 @@ $data = mysql_fetch_array($sql);
 <body>
 
 <div class="container">
+<?php include "plugin/navigation.php"; ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="page-header">
