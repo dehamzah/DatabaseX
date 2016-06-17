@@ -770,7 +770,7 @@ if(isset($_POST['update']))
 
 	<div class="form-group">
 	<input type="submit" value="Update" name="update" class="btn btn-primary">
-	<a href="#" class="btn btn-danger">Batal</a>
+    <a href="javascript://" onclick="history.back();" class="btn btn-danger">Batal</a>
 	</div>
 
 	</form>

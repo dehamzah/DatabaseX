@@ -11,6 +11,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+              <li><a href="javascript://" onclick="history.back();">Back</a></li>
               <li><a href="data.php">Data</a></li>
             </ul>
           </div>
