@@ -12,6 +12,7 @@ $data = mysql_fetch_array($sql);
 <body>
 
 <div class="container">
+<?php include "plugin/navigation.php"; ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="page-header">
