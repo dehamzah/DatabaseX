@@ -3,7 +3,7 @@
 <?php
 include "plugin/header.php";
 include "plugin/notification.php"
-include "config/connect.php";
+include "config/dbconnect.php";
 
 $sql = mysql_query("SELECT id, mailing_address, country, city FROM auth_userprofile WHERE id = '".$_GET['id']."'");
 $data = mysql_fetch_array($sql);
